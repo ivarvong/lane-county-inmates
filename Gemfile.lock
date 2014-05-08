@@ -3,6 +3,7 @@ GEM
   specs:
     celluloid (0.15.2)
       timers (~> 1.1.0)
+    dotenv (0.10.0)
     httparty (0.13.1)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -26,6 +27,7 @@ PLATFORMS
 
 DEPENDENCIES
   celluloid
+  dotenv
   httparty
   puma
   redis
