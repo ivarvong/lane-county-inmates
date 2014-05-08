@@ -10,7 +10,7 @@ ENV['WORKER_KEY'] ||= 'test'
 puts "WORKER_KEY is #{ENV['WORKER_KEY']}"
 
 if !ENV['REDISCLOUD_URL'].nil?
-	puts "Connecting to #{redis_connection_string}"
+	puts "Connecting to ENV['REDISCLOUD_URL']"
 	uri = URI.parse(ENV["REDISCLOUD_URL"])
 	$redis = Redis.new(host: uri.host, port: uri.port, password: uri.password)
 else
