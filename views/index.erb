@@ -1,23 +1,57 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Lane Inmates</title>
-	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<title>Lane County Inmates</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 </head>
 <body>
 	<div class="container">
 		<h1>Lane County Inmates</h1>
-		<table class="table table-striped">
+		
+		<br>
+		<button class="btn btn-primary btn-show-all">Show All</button>
+		<button class="btn btn-primary btn-show-matches">Potential Matches</button>
+		<br>
+
+		<table class="inmate-table table table-striped">
+		<thead>
+			<th>Booking Date</th>
+			<th>Name</th>
+			<th>Booking Number</th>
+			<th>Scheduled Release Date</th>
+		</thead>
+		<tbody>
 		<% data.each do |row| %>
-			<% row_classes = (row['UOSearch'].count > 0 ? 'danger' : '') %>
+			<% row_classes = (row['UOSearch'].count > 0 ? 'danger' : 'no-match') %>
+			<% name = row['FirstName'] + " "+ row['LastName'] %>
 			<tr class="<%= row_classes %>">
 				<td><%= row['BookingDate'] %></td>
-				<td><%= row['FirstName'] %> <%= row['LastName'] %></td>
-				<td><a href="/inmate/<%= row['BookingNumber'] %>"><%= row['BookingNumber'] %></a></td>
+				<td><a href="http://uoregon.edu/findpeople/person/<%= name.gsub(' ', '%2A').downcase %>"><%= name %></a></td>
+				<td class="booking-number"><a href="/inmate/<%= row['BookingNumber'] %>"><%= row['BookingNumber'] %></a></td>
 				<td><%= row['ScheduledReleaseDate'] %></td>
 			</tr>
 		<% end %>
+		</tbody>
 		</table>
 	</div>
+	<script src=""></script>
+	<script>
+	$(document).ready(function() {
+		$('.btn-show-all').click(function() {
+			$('.inmate-table tr').show();
+		});
+		$('.btn-show-matches').click(function() {
+			$('.inmate-table tbody tr').each(function() {
+				if ($(this).hasClass('danger')) {
+					$(this).show();
+				} else {
+					$(this).hide();
+				}
+			});
+		});
+	});
+	</script>
 </body>	
 </html>

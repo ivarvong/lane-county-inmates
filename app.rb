@@ -40,7 +40,7 @@ end
 class MergeData
 	include Celluloid
 	def perform
-		puts "MergeData runs, but does nothing."
+		puts "Nothing here yet."				
 	end
 end
 
@@ -107,7 +107,6 @@ get '/latest.json' do
 end
 
 get '/' do
-	#$redis.get('index_html')
 	data = $redis.hgetall('inmate_by_booking_number').map{|k, v|
 		inmate = JSON.parse(v)
 		inmate.merge({
@@ -116,7 +115,8 @@ get '/' do
 	}.sort_by{|record|
 		record['BookingDate']
 	}.reverse
-	erb :index, locals: { data: data }
+	
+	html = erb :index, locals: { data: data }
 end
 
 get '/inmate/:booking_number' do
