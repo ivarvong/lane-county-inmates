@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Lane Inmates</title>
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<title>Lane Inmates</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 </head>
 <body>
 	<div class="container">
 		<h1>Lane County Inmates</h1>
-		
+		<table class="table table-striped">
+		<% data.each do |row| %>
+			<% row_classes = (row['UOSearch'].count > 0 ? 'danger' : '') %>
+			<tr class="<%= row_classes %>">
+				<td><%= row['BookingDate'] %></td>
+				<td><%= row['FirstName'] %> <%= row['LastName'] %></td>
+				<td><a href="/inmate/<%= row['BookingNumber'] %>"><%= row['BookingNumber'] %></a></td>
+				<td><%= row['ScheduledReleaseDate'] %></td>
+			</tr>
+		<% end %>
+		</table>
 	</div>
 </body>	
 </html>
